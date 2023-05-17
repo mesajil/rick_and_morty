@@ -4,7 +4,7 @@ import { About, Cards, Detail, Error, Favorites, FormClass, Nav } from './compon
 // import characters, { Rick } from './data.js';
 import axios from 'axios'
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
-import { EMAIL, PASSWORD } from './constants';
+import { CHARACTER_URL, EMAIL, INFO_URL, PASSWORD } from './constants';
 import { addFavorite } from './redux/actions'
 import { useDispatch, useSelector } from "react-redux"
 
@@ -41,7 +41,7 @@ function App() {
    /**
     * @param {object} character character to be added 
     */
-   const addCharacter = (character) => {
+   const handleAddCharacter = (character) => {
       if (!character.name)
          window.alert('Character not found');
       else if (characters.find(e => e.id === Number(character.id)))
@@ -55,19 +55,23 @@ function App() {
     * @param {number} id character's id
     */
    function addCharacterById(id) {
-      axios(`https://rickandmortyapi.com/api/character/${id}`)
-         .then(({ data }) => { addCharacter(data) })
-         .catch(() => addCharacter({}))
+      // axios(`https://rickandmortyapi.com/api/character/${id}`)
+      axios(`${CHARACTER_URL}/${id}`)
+         .then(({data}) => {
+            console.log(data);
+            handleAddCharacter(data)
+         })
+         .catch(() => handleAddCharacter({}))
    }
 
    /**
     * Add a random character to the list.
     */
    function addRandomCharacter() {
-      axios.get(`https://rickandmortyapi.com/api/character`)
+      axios.get(INFO_URL)
          .then(({ data }) => {
             let randomId = Math.floor(Math.random() * data.info.count) + 1;
-            return axios(`https://rickandmortyapi.com/api/character/${randomId}`)
+            return axios(`${CHARACTER_URL}/${randomId}`)
          })
          .then(({ data }) => { setCharacters((characters) => [...characters, data]) });
    }
