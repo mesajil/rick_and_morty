@@ -1,5 +1,5 @@
-import SearchBar from "./SearchBar.jsx";
 import { Link, useLocation } from "react-router-dom";
+import { SearchBar } from "../"
 
 export default function Nav({ onSearch, onRandom, logout }) {
     const location = useLocation()
@@ -27,7 +27,7 @@ export default function Nav({ onSearch, onRandom, logout }) {
                     {/* SearchBar */}
                     <SearchBar onSearch={onSearch} />
                     {/* Random button */}
-                    <button onClick={onRandom}>Agregar random</button>
+                    <button onClick={onRandom}>Add random</button>
                 </div>
                 : <div></div>
             }

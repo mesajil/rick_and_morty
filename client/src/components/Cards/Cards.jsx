@@ -1,4 +1,4 @@
-import Card from './Card';
+import { Card } from '../';
 
 export default function Cards({ characters, onClose, showCloseButton }) {
    return (

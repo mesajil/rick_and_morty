@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { addFavorite, removeFavorite } from '../redux/actions'
 import { connect } from "react-redux"
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+// Redux
+import { addFavorite, removeFavorite } from '../../redux/actions'
 
 function Card({ character, onClose, addFavorite, removeFavorite, myFavorites, showCloseButton }) {
    const [isFav, setIsFav] = useState(false)

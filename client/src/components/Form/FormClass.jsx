@@ -1,5 +1,5 @@
 import React from "react";
-import { validateEmail, validatePassword } from '../utils/validation'
+import { validateEmail, validatePassword } from '../../utils/utils/utils'
 
 class FormClass extends React.Component {
     constructor(props) {
@@ -83,40 +83,43 @@ class FormClass extends React.Component {
 
     render() {
 
-        // Access nested state properties
-
         const { email, password } = this.state.forms;
         const { emailError, passwordError } = this.state.errors;
 
         return (
-            <form action="" onSubmit={this.handleSubmit}>
-                {/* Email */}
-                <div>
-                    <label htmlFor="">EMAIL</label>
-                    <input
-                        type="text"
-                        value={email}
-                        name="email"
-                        onChange={this.onChange}
-                    />
-                </div>
-                <p>{emailError}</p>
+            <div>
+                {/* Render description */}
+                <h2>Please, enter your data here</h2>
+                {/* Render form */}
+                <form action="" onSubmit={this.handleSubmit}>
+                    {/* Email form */}
+                    <div>
+                        <label htmlFor="">Email: </label>
+                        <input
+                            type="text"
+                            value={email}
+                            name="email"
+                            onChange={this.onChange}
+                        />
+                    </div>
+                    <p>{emailError}</p>
 
-                {/* Password */}
-                <div>
-                    <label htmlFor="">PASSWORD</label>
-                    <input
-                        type="password"
-                        value={password}
-                        name="password"
-                        onChange={this.onChange}
-                    />
-                </div>
-                <p>{passwordError}</p>
-                
-                {/* Submit button */}
-                <button>Submit</button>
-            </form>
+                    {/* Password form */}
+                    <div>
+                        <label htmlFor="">Password: </label>
+                        <input
+                            type="password"
+                            value={password}
+                            name="password"
+                            onChange={this.onChange}
+                        />
+                    </div>
+                    <p>{passwordError}</p>
+
+                    {/* Submit button */}
+                    <button>Submit</button>
+                </form>
+            </div>
         )
     }
 }

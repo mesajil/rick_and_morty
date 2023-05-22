@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios'
 import './App.css';
 import { About, Cards, Detail, Error, Favorites, FormClass, Nav } from './components'
-// import characters, { Rick } from './data.js';
-import axios from 'axios'
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import { CHARACTER_URL, EMAIL, INFO_URL, PASSWORD } from './constants';
-import { addFavorite } from './redux/actions'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import FormView from './components/Form/FormView';
 
 
 
@@ -19,20 +18,17 @@ function App() {
 
 
    /**
-    * Validate 'userData' and link to '/home'
-    * @param {object} userData 
-    * @returns 
+    * Login and go home
+    * @param {object} formUserData
     */
-   const login = (userData) => {
-      const { email, password } = userData
+   const login = (formUserData) => {
+      const { email, password } = formUserData
       if (email !== EMAIL || password !== PASSWORD) return
       setAccess(true)
       navigate('/home')
    }
 
-   /**
-    * Set 'access' to 'false' and link to '/' 
-    */
+
    const logout = () => {
       setAccess(false)
       navigate('/')
@@ -57,7 +53,7 @@ function App() {
    function addCharacterById(id) {
       // axios(`https://rickandmortyapi.com/api/character/${id}`)
       axios(`${CHARACTER_URL}/${id}`)
-         .then(({data}) => {
+         .then(({ data }) => {
             console.log(data);
             handleAddCharacter(data)
          })
@@ -86,7 +82,7 @@ function App() {
       )
 
    /**
-    * Return to '/' if 'access' is 'false' 
+    * Return to form if there's no access 
     */
    useEffect(() => {
       !access && navigate('/')
@@ -96,16 +92,24 @@ function App() {
       <div className='App'>
          {/* Render Nav */}
          {(location.pathname !== '/')
-            ? <Nav onSearch={addCharacterById} onRandom={addRandomCharacter} logout={logout} />
+            ? <Nav
+               onSearch={addCharacterById}
+               onRandom={addRandomCharacter}
+               logout={logout} />
             : <div></div>
          }
          {/* Render Routes */}
          <Routes>
-            <Route path='/' element={<FormClass login={login} />} />
+
+            <Route path='/' element={<FormView login={login} />} />
             <Route path="/about" element={<About />} />
             <Route path='/detail/:id' element={<Detail />} />
             <Route path="/home" element={
-               <Cards characters={characters} onClose={removeCharacter} showCloseButton={true} />
+               <Cards
+                  characters={characters}
+                  onClose={removeCharacter}
+                  showCloseButton={true}
+               />
             } />
             <Route path='/favorites' element={
                <Favorites />
