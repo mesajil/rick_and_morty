@@ -3,7 +3,7 @@ import axios from 'axios'
 import './App.css';
 import { About, Cards, Detail, Error, Favorites, FormClass, Nav } from './components'
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
-import { CHARACTER_URL, EMAIL, INFO_URL, PASSWORD } from './constants';
+import { CHARACTER_URL, EMAIL, API_URL, PASSWORD } from './utils/constants';
 import { useDispatch } from "react-redux"
 import FormView from './components/Form/FormView';
 
@@ -51,9 +51,8 @@ function App() {
     * @param {number} id character's id
     */
    function addCharacterById(id) {
-      // axios(`https://rickandmortyapi.com/api/character/${id}`)
       axios(`${CHARACTER_URL}/${id}`)
-         .then(({ data }) => {
+         .then(({data}) => {
             console.log(data);
             handleAddCharacter(data)
          })
@@ -64,7 +63,7 @@ function App() {
     * Add a random character to the list.
     */
    function addRandomCharacter() {
-      axios.get(INFO_URL)
+      axios.get(API_URL)
          .then(({ data }) => {
             let randomId = Math.floor(Math.random() * data.info.count) + 1;
             return axios(`${CHARACTER_URL}/${randomId}`)
